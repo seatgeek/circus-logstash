@@ -4,12 +4,15 @@ A logger to be used in Circus that ships logs via a Redis queue to Logstash. If 
 
 # Installation
 
+```
   pip install circus-logstash
+```
 
 # Usage
 
 In your Circus config add the stream class and some info
 
+```
   stdout_stream.class = circus_logstash.circus_logstash.LogstashRedisLogger
   stdout_stream.refresh_time = 0.3
   stdout_stream.urls = redis://localhost:6380/0
@@ -17,6 +20,7 @@ In your Circus config add the stream class and some info
   stdout_stream.redis_namespace = logstash:app:production
 
   stdout_stream.subclass = FileStream
+```
 
 `urls` is a command separated list of Redis urls to connect to. These are done in round robin if there are any failures connection/writing.
 
