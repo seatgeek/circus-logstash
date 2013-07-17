@@ -22,9 +22,9 @@ In your Circus config add the stream class and some info
   stdout_stream.subclass = FileStream
 ```
 
-`urls` is a command separated list of Redis urls to connect to. These are done in round robin if there are any failures connection/writing.
+`urls` is a comma separated list of Redis urls to connect to. These are done in round robin if there are any failures connection/writing.
 
-`service` Use throughout for namespacing the log lines
+`service` Used throughout for namespacing the log lines
 
 `redis_namespace` The list to write logs to
 
