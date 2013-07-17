@@ -9,7 +9,7 @@ def read(fname):
 def run_setup():
     setup(
         name='circus-logstash',
-        version='0.0.1',
+        version='0.0.2',
         description='A Logstash shipper for Circus',
         keywords = 'logstash circus',
         url='https://github.com/seatgeek/circus-logstash',
