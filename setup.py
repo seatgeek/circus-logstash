@@ -8,16 +8,17 @@ def read(fname):
 
 def run_setup():
     setup(
-        name='',
+        name='circus-logstash',
         version='0.0.1',
-        description='',
-        keywords = '',
-        url='',
-        author='',
-        author_email='@',
-        license='',
-        packages=[''],
+        description='A Logstash shipper for Circus',
+        keywords = 'logstash circus',
+        url='https://github.com/seatgeek/circus-logstash',
+        author='Philip Cristiano',
+        author_email='phil@seatgeek.com',
+        license='BSD',
+        packages=['circus_logstash'],
         install_requires=[
+            'redis',
         ],
         test_suite='tests',
         long_description=read('README.md'),
