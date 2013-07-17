@@ -36,11 +36,9 @@ class LogstashRedisLogger(object):
 
     def __call__(self, data):
         self._substream(data)
-        print data
         now = datetime.utcnow().isoformat() + 'Z'
         for line in data['data'].split('\n'):
             msg = self.format(now, line, data['name'])
-            print msg
             self._pipeline.rpush(
                 self._redis_namespace,
                 msg,
@@ -59,6 +57,7 @@ class LogstashRedisLogger(object):
         self._pipeline = None
 
         url = self._urls.next()
+        logger.info('Will try to ship logs to {0}'.format(url))
         _url = urlparse(url, scheme='redis')
         _, _, _db = _url.path.rpartition('/')
 
@@ -88,7 +87,6 @@ class LogstashRedisLogger(object):
         for key, value in kwargs.iteritems():
             if key.startswith('subclass'):
                 new_args[key[9:]] = value
-        print new_args
         return get_stream(new_args)['stream']
 
 
