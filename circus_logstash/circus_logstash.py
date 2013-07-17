@@ -78,7 +78,7 @@ class LogstashRedisLogger(object):
         })
 
     def get_substream(self, **kwargs):
-        klass = kwargs.pop('subclass')
+        klass = kwargs.pop('subclass', None)
         if not klass:
             return null_stream
 
