@@ -15,8 +15,8 @@ In your Circus config add the stream class and some info
 ```
   stdout_stream.class = circus_logstash.circus_logstash.LogstashRedisLogger
   stdout_stream.refresh_time = 0.3
-  stdout_stream.urls = redis://localhost:6380/0
-  stdout_stream.service = test
+  stdout_stream.urls = redis://localhost:6379/0
+  stdout_stream.service = service_name
   stdout_stream.redis_namespace = logstash:app:production
 
   stdout_stream.subclass = FileStream
