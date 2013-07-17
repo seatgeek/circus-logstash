@@ -37,10 +37,11 @@ class LogstashRedisLogger(object):
     def __call__(self, data):
         self._substream(data)
         now = datetime.utcnow().isoformat() + 'Z'
+        pid = data['pid']
         for line in data['data'].split('\n'):
             line = line.strip()
             if line:
-                msg = self.format(now, line, data['name'])
+                msg = self.format(now, line, data['name'], pid)
                 self._pipeline.rpush(
                     self._redis_namespace,
                     msg,
@@ -67,7 +68,7 @@ class LogstashRedisLogger(object):
         self._pipeline = self._redis.pipeline(transaction=False)
 
 
-    def format(self, timestamp, line, channel):
+    def format(self, timestamp, line, channel, pid):
         return dumps({
             '@source': 'circus://{0}/{1}'.format(self._host, self._service),
             '@type': 'circus',
@@ -75,7 +76,7 @@ class LogstashRedisLogger(object):
             '@fields': {},
             '@timestamp': timestamp,
             '@source_host': self._host,
-            '@source_path':  'circus:{0}:{1}'.format(self._service, channel),
+            '@source_path':  'circus:{0}:{1}:{2}'.format(self._service, pid, channel),
             '@message': line,
         })
 
