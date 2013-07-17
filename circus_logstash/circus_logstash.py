@@ -74,7 +74,7 @@ class LogstashRedisLogger(object):
             '@timestamp': timestamp,
             '@source_host': self._host,
             '@source_path':  'circus:{0}:{1}'.format(self._service, channel),
-            '@message': 'a test message',
+            '@message': line,
         })
 
     def get_substream(self, **kwargs):
