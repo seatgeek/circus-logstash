@@ -38,11 +38,13 @@ class LogstashRedisLogger(object):
         self._substream(data)
         now = datetime.utcnow().isoformat() + 'Z'
         for line in data['data'].split('\n'):
-            msg = self.format(now, line, data['name'])
-            self._pipeline.rpush(
-                self._redis_namespace,
-                msg,
-            )
+            line = line.strip()
+            if line:
+                msg = self.format(now, line, data['name'])
+                self._pipeline.rpush(
+                    self._redis_namespace,
+                    msg,
+                )
 
         try:
             self._pipeline.execute()
