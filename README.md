@@ -20,6 +20,7 @@ In your Circus config add the stream class and some info
   stdout_stream.redis_namespace = logstash:app:production
 
   stdout_stream.subclass = FileStream
+  stdout_stream.subclass_filename = '/var/log/...'
 ```
 
 `urls` is a comma separated list of Redis urls to connect to. These are done in round robin if there are any failures connection/writing.
