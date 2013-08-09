@@ -21,6 +21,8 @@ In your Circus config add the stream class and some info
 
   stdout_stream.subclass = FileStream
   stdout_stream.subclass_filename = '/var/log/...'
+
+  stdout_stream.field_extra_field = 'field_value'
 ```
 
 `urls` is a comma separated list of Redis urls to connect to. These are done in round robin if there are any failures connection/writing.
@@ -32,3 +34,5 @@ In your Circus config add the stream class and some info
 `subclass` A class to use as well (like writing files still)
 
 Any options prefixed with `subclass_` will be passed to the init of the subclass
+
+Any options prefixed with `field_` can be used to include extra field:value pairs in the Logstash events. This is useful to include extra metadata about this process.

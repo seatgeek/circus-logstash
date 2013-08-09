@@ -28,6 +28,7 @@ class LogstashRedisLogger(object):
         self._redis_namespace = redis_namespace
         self._service = service
         self._substream = self.get_substream(**kwargs)
+        self._fields = get_fields(**kwargs)
 
         self._redis = None
         self._pipeline = None
@@ -73,7 +74,7 @@ class LogstashRedisLogger(object):
             '@source': 'circus://{0}/{1}'.format(self._host, self._service),
             '@type': 'circus',
             '@tags': [self._service],
-            '@fields': {},
+            '@fields': self._fields,
             '@timestamp': timestamp,
             '@source_host': self._host,
             '@source_path':  'circus:{0}:{1}:{2}'.format(self._service, pid, channel),
@@ -91,6 +92,14 @@ class LogstashRedisLogger(object):
             if key.startswith('subclass'):
                 new_args[key[9:]] = value
         return get_stream(new_args)['stream']
+
+
+def get_fields(**kwargs):
+    fields = {}
+    for key, value in kwargs.iteritems():
+        if key.startswith('field_'):
+            fields[key[6:]] = value
+    return fields
 
 
 def null_stream(*args, **kwargs):
